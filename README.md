@@ -47,6 +47,8 @@ Provides customized recommendations for every user.
 ✅ Gender Inclusive
 
 Supports fashion recommendations for all users.
+
+
 🛠 Technology Stack
 Frontend
 HTML
