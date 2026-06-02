@@ -1,9 +1,9 @@
-Aura Fashion App 👗✨
+#Aura Fashion App 👗✨
 
 Your Personalized Style Buddy
 
 Aura is an AI-powered fashion recommendation application that helps users choose outfits based on their skin tone, body shape, and local weather conditions. The app also suggests matching hairstyles to create a complete personalized look.
-📌 Problem Statement
+#📌 Problem Statement
 
 Many people struggle with choosing the right outfit every day. Fashion choices often do not match an individual's body shape, skin tone, or weather conditions.
 
@@ -14,7 +14,7 @@ Lack of personalized styling guidance
 Time-consuming fashion decisions
 No integration of weather and personal appearance factors
 Need for a smart fashion assistant
-🎯 Objective
+#🎯 Objective
 
 Aura aims to:
 
@@ -23,7 +23,7 @@ Analyze skin tone and body shape
 Suggest weather-appropriate outfits
 Recommend matching hairstyles
 Make fashion decisions quick and effortless
-🚀 Features
+#🚀 Features
 ✅ Skin Tone Analysis
 
 Uses Computer Vision to identify the user's skin tone.
@@ -49,7 +49,7 @@ Provides customized recommendations for every user.
 Supports fashion recommendations for all users.
 
 
-🛠 Technology Stack
+#🛠 Technology Stack
 Frontend
 HTML
 CSS
