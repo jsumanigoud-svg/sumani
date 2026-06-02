@@ -1,0 +1,9 @@
+<input type="file" id="image">
+<button onclick="upload()">Analyze</button>
+
+<script>
+function upload() {
+    let file = document.getElementById("image").files[0];
+    console.log(file);
+}
+</script>
