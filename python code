@@ -1,0 +1,152 @@
+from flask import Flask, request, jsonify
+import cv2
+import numpy as np
+import requests
+
+app = Flask(__name__)
+
+
+# Weather Function
+
+def get_weather(city):
+    API_KEY = "YOUR_OPENWEATHER_API_KEY"
+
+    try:
+        url = f"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={API_KEY}"
+        data = requests.get(url).json()
+
+        if "weather" in data:
+            return data["weather"][0]["main"]
+    except:
+        pass
+
+    return "Clear"
+
+
+
+# Skin Tone Detection
+
+def detect_skin_tone(image_path):
+
+    img = cv2.imread(image_path)
+
+    if img is None:
+        return "Medium"
+
+    avg_color = np.mean(img, axis=(0, 1))
+    brightness = np.mean(avg_color)
+
+    if brightness > 180:
+        return "Fair"
+    elif brightness > 100:
+        return "Medium"
+    else:
+        return "Dark"
+
+
+
+# Body Shape Detection
+
+def detect_body_shape():
+    return "Average"
+
+
+
+# Hairstyle Recommendation
+
+def recommend_hairstyle(face_shape):
+
+    styles = {
+        "Oval": "Pompadour",
+        "Round": "Side Part",
+        "Square": "Buzz Cut",
+        "Heart": "Textured Fringe"
+    }
+
+    return styles.get(face_shape, "Classic Style")
+
+
+# ---------------------------
+# Outfit Recommendation
+# ---------------------------
+def recommend_outfit(skin_tone, weather):
+
+    outfits = {
+
+        ("Fair", "Clear"):
+            "Light Blue Shirt + Beige Pants",
+
+        ("Medium", "Clear"):
+            "Olive Green Shirt + Black Jeans",
+
+        ("Dark", "Clear"):
+            "Mustard Shirt + Black Jeans",
+
+        ("Fair", "Rain"):
+            "Grey Hoodie + Jeans",
+
+        ("Medium", "Rain"):
+            "Navy Jacket + Denim",
+
+        ("Dark", "Rain"):
+            "Black Waterproof Jacket",
+
+        ("Fair", "Clouds"):
+            "Brown Sweater + Chinos",
+
+        ("Medium", "Clouds"):
+            "White Shirt + Cargo Pants",
+
+        ("Dark", "Clouds"):
+            "Maroon Shirt + Jeans"
+    }
+
+    return outfits.get(
+        (skin_tone, weather),
+        "Casual T-Shirt + Jeans"
+    )
+
+
+# ---------------------------
+# Main API
+# ---------------------------
+@app.route("/recommend", methods=["POST"])
+def recommend():
+
+    image = request.files["image"]
+    city = request.form["city"]
+
+    image.save("user.jpg")
+
+    skin_tone = detect_skin_tone("user.jpg")
+    body_shape = detect_body_shape()
+    weather = get_weather(city)
+
+    outfit = recommend_outfit(
+        skin_tone,
+        weather
+    )
+
+    hairstyle = recommend_hairstyle(
+        "Oval"
+    )
+
+    return jsonify({
+
+        "skin_tone": skin_tone,
+
+        "body_shape": body_shape,
+
+        "weather": weather,
+
+        "recommended_outfit": outfit,
+
+        "hairstyle": hairstyle
+    })
+
+
+# ---------------------------
+# Run Server
+# ---------------------------
+if __name__ == "__main__":
+    app.run(debug=True)
