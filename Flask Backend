@@ -1,0 +1,20 @@
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+@app.route('/recommend', methods=['POST'])
+def recommend():
+    skin_tone = request.json['skin_tone']
+    weather = request.json['weather']
+
+    if skin_tone == "fair" and weather == "hot":
+        outfit = "Light blue cotton shirt with beige trousers"
+    elif weather == "cold":
+        outfit = "Jacket with jeans"
+    else:
+        outfit = "Casual wear"
+
+    return jsonify({"outfit": outfit})
+
+if __name__ == '__main__':
+    app.run(debug=True)
